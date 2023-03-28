@@ -28,7 +28,7 @@ export const shopSlice = createSlice({
     },
     incrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payloadData
+        (item) => item._id === action.payload._id
       );
       if (item) {
         item.quantity++;
@@ -36,13 +36,19 @@ export const shopSlice = createSlice({
     },
     decrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payloadData
+        (item) => item._id === action.payload._id
       );
       if (item && item.quantity === 1) {
         item.quantity = 1;
       } else {
         item.quantity--;
       }
+    },
+    addUser: (state, action) => {
+      state.userInfo = action.payload;
+    },
+    removeUser: (state) => {
+      state.userInfo = null;
     },
   },
 });
@@ -52,5 +58,7 @@ export const {
   resetCart,
   incrementQuantity,
   decrementQuantity,
+  addUser,
+  removeUser,
 } = shopSlice.actions;
 export default shopSlice.reducer;

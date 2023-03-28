@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import CartItem from "../components/CartItem";
 const Cart = () => {
-  const data = useSelector((state) => state.shop.productData);
-  console.log(data);
+  const productData = useSelector((state) => state.shop.productData);
+  const [totalAmount, setTotalAmount] = useState("");
+  const userInfo = useSelector((state) => state.shop.userInfo);
+  const [payNow, setPayNow] = useState(false);
+
+  useEffect(() => {
+    let price = 0;
+    productData.map((item) => {
+      price += item.price * item.quantity;
+      return price;
+    });
+    setTotalAmount(price.toFixed(2));
+  }, [productData]);
+  const handleCheckout = () => {
+    if (userInfo) {
+      setPayNow(true);
+    }else{
+       toast(`Please sign in to checkout `,{type:'error'})
+    }
+  };
   return (
     <div className="">
       <img
@@ -20,7 +39,9 @@ const Cart = () => {
             <h2 className="text-2xl font-medium">Cart totals</h2>
             <p className="flex items-center gap-4 text-base">
               Subtotal{" "}
-              <span className="font-titleFont font-bold text-lg">${208}</span>
+              <span className="font-titleFont font-bold text-lg">
+                ${totalAmount}
+              </span>
             </p>
             <p className="flex items-start gap-4 text-base">
               Shipping{" "}
@@ -31,9 +52,12 @@ const Cart = () => {
             </p>
           </div>
           <p className="font-titleFont font-semibold flex justify-between mt-6">
-            Total : <span className="text-xl font-bold">${890}</span>
+            Total : <span className="text-xl font-bold">${totalAmount}</span>
           </p>
-          <button className="bg-black text-white text-base w-full py-3 mt-6 hover:bg-gray-800 duration-300">
+          <button
+            onClick={handleCheckout}
+            className="bg-black text-white text-base w-full py-3 mt-6 hover:bg-gray-800 duration-300"
+          >
             Check out{" "}
           </button>
         </div>

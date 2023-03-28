@@ -1,7 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MdArrowLeft, MdOutlineArrowBack, MdOutlineClose } from "react-icons/md";
-import { deleteFromCart, resetCart } from "../redux/shopSlice";
+import { MdOutlineArrowBack, MdOutlineClose } from "react-icons/md";
+import {
+  decrementQuantity,
+  deleteFromCart,
+  incrementQuantity,
+  resetCart,
+} from "../redux/shopSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import { Link } from "react-router-dom";
@@ -42,7 +47,13 @@ const CartItem = () => {
               <div className="flex items-center gap-4 text-sm font-semibold">
                 {" "}
                 <button
-                  //   onClick={() => setBaseQuantity((prev) => prev - 1)}
+                  onClick={() =>
+                    dispatch(
+                      decrementQuantity({
+                        _id: item._id,
+                      })
+                    )
+                  }
                   //   disabled={baseQuantity === 1}
                   //   style={{ cursor: "not-allowed" }}
                   className="border h-5 font-normal text-lg flex items-center justify-center px-2  hover:bg-gray-700 hover:text-white cursor-pointer duration-300 active:bg-black"
@@ -51,7 +62,13 @@ const CartItem = () => {
                 </button>
                 <span>{item.quantity}</span>
                 <button
-                  //   onClick={() => setBaseQuantity((prev) => prev + 1)}
+                  onClick={() =>
+                    dispatch(
+                      incrementQuantity({
+                        _id: item._id,
+                      })
+                    )
+                  }
                   //   disabled={baseQuantity === 10}
                   className="border h-5 font-normal text-lg flex items-center justify-center px-2  hover:bg-gray-700 hover:text-white cursor-pointer duration-300 active:bg-black"
                 >
@@ -77,13 +94,13 @@ const CartItem = () => {
         <Link to="/">
           <button className="mt-8 ml-7 flex items-center gap-1 text-gray-400 hover:text-black duration-300">
             {" "}
-            <MdOutlineArrowBack/>
+            <MdOutlineArrowBack />
             go Shoping
           </button>
         </Link>
       )}
       <ToastContainer
-        position="top-right"
+        position="top-left"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
