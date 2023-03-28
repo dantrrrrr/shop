@@ -12,7 +12,8 @@ const Header = () => {
         <Link to={"/"}>
           {" "}
           <div>
-            <img src={logoDark} alt="logoBrand" className="w-28" />
+            {/* <img src={logoDark} alt="logoBrand" className="w-28" /> */}
+            <h1 className="text-4xl font-titleFont text-black-900 font-bold">dantr</h1>
           </div>
         </Link>
         <div className="flex items-center gap-8">

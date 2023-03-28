@@ -11,7 +11,9 @@ const Footer = () => {
       <div className="max-w-screen-xl mx-20 grid grid-cols-4">
         {/* logo  */}
         <div className="flex flex-col gap-7">
-          <img className="w-32" src={logoLight} alt="logoLight" />
+          {/* <img className="w-32" src={logoLight} alt="logoLight" />
+           */}
+           <div className="w-32"><h1 className="text-4xl font-bold font-titleFont text-white ">dantr</h1></div>
           <p className="text-white text-sm tracking-wide"> @ dantr.com</p>
           <img className="w-56" src={paymentLogo} alt="paymentLogo" />
           <div className="flex flex-row gap-5 text-gray-500 text-lg">
