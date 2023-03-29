@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import CartItem from "../components/CartItem";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 const Cart = () => {
   const productData = useSelector((state) => state.shop.productData);
   const [totalAmount, setTotalAmount] = useState("");
@@ -19,10 +21,17 @@ const Cart = () => {
   const handleCheckout = () => {
     if (userInfo) {
       setPayNow(true);
-    }else{
-       toast(`Please sign in to checkout `,{type:'error'})
+    } else {
+      toast(`Please sign in to checkout `, { type: "error" });
     }
   };
+  const payment =async(token)=>{
+    await axios.post('http://localhost:5000/pay',{
+      amount:totalAmount*100,
+      token:token
+
+    })
+  }
   return (
     <div className="">
       <img
@@ -60,6 +69,19 @@ const Cart = () => {
           >
             Check out{" "}
           </button>
+          {payNow && (
+            <div>
+              <StripeCheckout
+                stripeKey="pk_test_51MCnG7GVN4VUhj0QUY7vA1KpQltX6VvU0hpItAkq7hgArvMp3BLjM9wPokhpzaWrxUGOueaTXrinLwl7dylklmLQ004KIhVCAY"
+                name="Shoping dantr"
+                amount={totalAmount * 100}
+                label="pay to dantr"
+                description={`Your payment is ${totalAmount}`}
+                email={userInfo.email}
+                token={payment}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
